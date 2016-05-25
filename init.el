@@ -72,8 +72,9 @@
 (require 'evil)
 (evil-mode t)
 
-;; global line number
-(global-linum-mode t)
+;; line number
+(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'org-mode-hook 'linum-mode)
 
 ;; add spacing between line numbers and text
 (setq linum-format "%d ")
@@ -87,11 +88,11 @@
 ;; rainbow delimeterssssss
 (add-to-list 'load-path "~/.emacs.d/rainbow-delimiters")
 (require 'rainbow-delimiters)
-(rainbow-delimiters-mode t)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 ;; jump to next match at current mark
 (require 'smartscan)
-(smartscan-mode t)
+(global-smartscan-mode t)
 
 ;; show context based help
 (require 'discover)
@@ -102,6 +103,8 @@
 (global-set-key (kbd "C-x C-z") 'zoom-window-zoom)
 (setq zoom-window-mode-line-color "DarkGreen")
 
+;; keybinding for magit-status
+(global-set-key (kbd "C-c m") 'magit-status)
 
 ;; ruby specifics
 
@@ -134,8 +137,18 @@
 (require 'rinari)
 (add-hook 'ruby-mode-hook 'rinari-minor-mode)
 
+;; static linting
 (require 'rubocop)
 (add-hook 'ruby-mode-hook #'rubocop-mode)
+
+;; rspec from emacs
+(require 'rspec-mode)
+
+;; I want rspec instead of rake spec
+(setq rspec-use-rake-when-possible nil)
+;; Scroll to the first test failure
+(setq compilation-scroll-output 'first-error)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
